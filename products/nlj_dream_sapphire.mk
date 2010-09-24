@@ -31,8 +31,12 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.compcache.default=0
 
+# Enable Swap by default on D/S
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.modversion=CyanogenMod-6-$(shell date +%m%d%Y)-NLJ
+    ro.swap.default=1
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.modversion=CyanogenMod-6-$(shell date +%Y.%m.%d)-NLJ
 
 # Use the audio profile hack
 WITH_DS_HTCACOUSTIC_HACK := true
