@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <!-- Generic -->
     <string name="app_name">CyanogenMod settings</string>
@@ -403,4 +403,10 @@
     <string name="quiet_hours_dim">Dim LED</string>
     <string name="quiet_hours_dim_on">LED will dim if possible</string>
     <string name="quiet_hours_dim_off">LED will be full brightness</string>
+<string name="title_import_from_xml"/>
+    <string name="title_export_to_xml"/>
+    <string name="pref_swap_summary">Enables usage of swap partition (requires reboot)</string>
+    <string name="summary_export_to_xml"/>
+    <string name="pref_swap_title">Enable swap</string>
+    <string name="summary_import_from_xml"/>
 </resources>

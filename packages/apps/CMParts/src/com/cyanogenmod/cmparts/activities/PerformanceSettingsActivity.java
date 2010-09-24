@@ -22,8 +22,18 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
     private static final String COMPCACHE_PREF = "pref_compcache";
     
-    private static final String COMPCACHE_PROP = "persist.service.compcache";
-    
+    private static final String COMPCACHE_PROP = "compcache.size";
+
+    private static final String COMPCACHE_PERSIST_PROP = "persist.service.compcache";
+
+    private static final String COMPCACHE_DEFAULT = "25";
+
+    private static final String SWAP_PERSIST_PROP = "persist.sys.swap";
+
+    private static final String SWAP_PREF = "pref_swap";
+
+    private static final String SWAP_DEFAULT = "0";
+
     private static final String JIT_PREF = "pref_jit_mode";
     
     private static final String JIT_ENABLED = "int:jit";
@@ -56,7 +66,9 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
     private static final int LOCK_MMS_DEFAULT = 1;
 
-    private CheckBoxPreference mCompcachePref;
+    private ListPreference mCompcachePref;
+
+    private CheckBoxPreference mSwapPref;
 
     private CheckBoxPreference mJitPref;
 
@@ -81,11 +93,20 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
         
         PreferenceScreen prefSet = getPreferenceScreen();
         
-        mCompcachePref = (CheckBoxPreference) prefSet.findPreference(COMPCACHE_PREF);
+        mCompcachePref = (ListPreference) prefSet.findPreference(COMPCACHE_PREF);
+        mSwapPref = (CheckBoxPreference) prefSet.findPreference(SWAP_PREF);
         if (isSwapAvailable()) {
-            mCompcachePref.setChecked(SystemProperties.getBoolean(COMPCACHE_PROP, false));
+            if (SystemProperties.get(COMPCACHE_PROP).equals("1"))
+                SystemProperties.set(COMPCACHE_PROP,COMPCACHE_DEFAULT);
+            mCompcachePref.setValue(SystemProperties.get(COMPCACHE_PERSIST_PROP,
+                      SystemProperties.get(COMPCACHE_PROP, COMPCACHE_DEFAULT)));
+            mCompcachePref.setOnPreferenceChangeListener(this);
+
+            String useSwap = SystemProperties.get(SWAP_PERSIST_PROP, SWAP_DEFAULT);
+            mSwapPref.setChecked("1".equals(useSwap));
         } else {
             prefSet.removePreference(mCompcachePref);
+            prefSet.removePreference(mSwapPref);
         }
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(JIT_PREF);
@@ -125,11 +146,19 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
     
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mCompcachePref) {
-            SystemProperties.set(COMPCACHE_PROP, mCompcachePref.isChecked() ? "1" : "0");
-            return true;
+        if (preference == mSwapPref) {
+		boolean checked = mSwapPref.isChecked();
+		if (checked) {
+			SystemProperties.set(SWAP_PERSIST_PROP, "1");
+			SystemProperties.set(COMPCACHE_PERSIST_PROP, "0");
+			mCompcachePref.setValue("0");
+		} else {
+			SystemProperties.set(SWAP_PERSIST_PROP, "0");
+			SystemProperties.set(COMPCACHE_PERSIST_PROP, COMPCACHE_DEFAULT);
+			mCompcachePref.setValue(COMPCACHE_DEFAULT);
+		}
+		return true;
         }
-        
         if (preference == mJitPref) {
             SystemProperties.set(JIT_PERSIST_PROP, 
                     mJitPref.isChecked() ? JIT_ENABLED : JIT_DISABLED);
@@ -161,6 +190,17 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
         if (preference == mHeapsizePref) {
             if (newValue != null) {
                 SystemProperties.set(HEAPSIZE_PERSIST_PROP, (String)newValue);
+                return true;
+            }
+        }
+        if (preference == mCompcachePref) {
+            if (newValue != null) {
+                SystemProperties.set(COMPCACHE_PERSIST_PROP, (String)newValue);
+                if ( ! newValue.equals("0") ) {
+                        // CompCache is enabled - disable Swap
+                        SystemProperties.set(SWAP_PERSIST_PROP, "0");
+                        mSwapPref.setChecked(false);
+                }
                 return true;
             }
         }
