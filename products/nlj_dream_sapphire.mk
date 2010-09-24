@@ -36,7 +36,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.swap.default=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.modversion=CyanogenMod-6-$(shell date +%Y.%m.%d)-NLJ
+    ro.modversion=NLJ-$(shell date +%Y.%m.%d)
 
 # Use the audio profile hack
 WITH_DS_HTCACOUSTIC_HACK := true
