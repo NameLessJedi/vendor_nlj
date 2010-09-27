@@ -57,9 +57,16 @@ then
 fi
 
 PARTITION=`$FDISK -l $MMC | awk '/^\// && $5 == 83 {print $1;exit;}'`
+
+if [ -n ${PARTITION} ]
+then
+    log -p e -t mountsd "No ext2/3/4 partition detected."
+    exit 1
+fi
+
 if [ ! -b ${PARTITION} ]
 then
-    log -p e -t mountsd "Discovered Linux partition (${PARTITION}) not detected"
+    log -p e -t mountsd "Partition (${PARTITION}) declared as ext but cannot be detected"
     exit 1
 fi
 
