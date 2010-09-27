@@ -8,7 +8,7 @@
 # 20100822 
 # - first version heavily based on Firerat work
 # 20100823
-# - /data/data mount binded to /sd-ext/data
+# - /data/data mount bind to /sd-ext/data
 # - apk moved back to /data/app* in case we can't mount --bind  
 
 if [ -z ${SD_EXT_DIRECTORY} ]
@@ -65,7 +65,7 @@ do
    busybox mount --bind ${SD_EXT_DIRECTORY}/${d} /data/${d}
    if [ $? -eq 0 ]
    then
-       log -p i -t apps2sd "${SD_EXT_DIRECTORY}/${d} binded to /data/${d}"
+       log -p i -t apps2sd "${SD_EXT_DIRECTORY}/${d} bound to /data/${d}"
    else
        log -p e -t apps2sd "Failed to bind ${SD_EXT_DIRECTORY}/${d} on /data/${d}"
        sed -i 's#/data/#${SD_EXT_DIRECTORY}#' /dev/${d}_flist
@@ -93,7 +93,7 @@ fi
 busybox mount --bind ${SD_EXT_DIRECTORY}/data /data/data
 if [ $? -eq 0 ]
 then
-    log -p i -t apps2sd "${SD_EXT_DIRECTORY}/data binded to /data/data"
+    log -p i -t apps2sd "${SD_EXT_DIRECTORY}/data bound to /data/data"
 else
     log -p e -t apps2sd "Failed to bind ${SD_EXT_DIRECTORY}/data on /data/data"
     exit 1
