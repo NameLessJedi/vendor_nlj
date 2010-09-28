@@ -35,7 +35,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     CMParts \
     CMPartsHelper \
-    CMStats \
     CMWallpapers \
     DSPManager \
     FileManager \
@@ -63,7 +62,6 @@ PRODUCT_COPY_FILES += \
     vendor/cyanogen/prebuilt/common/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
     vendor/cyanogen/prebuilt/common/etc/init.d/03firstboot:system/etc/init.d/03firstboot \
     vendor/cyanogen/prebuilt/common/etc/init.d/04modules:system/etc/init.d/04modules \
-    vendor/cyanogen/prebuilt/common/etc/init.d/20userinit:system/etc/init.d/20userinit \
     vendor/nlj/prebuilt/common/bin/handle_compcache:system/bin/handle_compcache \
     vendor/nlj/prebuilt/common/bin/compcache:system/bin/compcache \
     vendor/cyanogen/prebuilt/common/bin/fix_permissions:system/bin/fix_permissions \
