@@ -5,7 +5,7 @@
 
 C=/tmp/backupdir
 S=/system
-V=NLJ6-
+V=NLJ-
 
 PROCEED=1;
 
