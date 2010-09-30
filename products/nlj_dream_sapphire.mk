@@ -17,7 +17,7 @@ PRODUCT_MODEL := Dream/Sapphire
 PRODUCT_MANUFACTURER := HTC
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_ID=FRG83 BUILD_DISPLAY_ID=FRG83 BUILD_FINGERPRINT=google/passion/passion/mahimahi:2.2/FRG83/60505:user/release-keys PRIVATE_BUILD_DESC="passion-user 2.2 FRG83 60505 release-keys"
 
-PRODUCT_SPECIFIC_DEFINES += TARGET_PRELINKER_MAP=$(TOP)/vendor/cyanogen/prelink-linux-arm-ds.map
+PRODUCT_SPECIFIC_DEFINES += TARGET_PRELINKER_MAP=$(TOP)/vendor/nlj/prelink-linux-arm-ds.map
 
 # Build kernel
 PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
@@ -45,10 +45,10 @@ WITH_DS_HTCACOUSTIC_HACK := true
 # Copy DS specific prebuilt files
 #
 PRODUCT_COPY_FILES +=  \
-    vendor/cyanogen/prebuilt/mdpi/media/bootanimation.zip:system/media/bootanimation.zip \
-    vendor/cyanogen/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
-    vendor/cyanogen/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
-    vendor/cyanogen/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
+    vendor/nlj/prebuilt/mdpi/media/bootanimation.zip:system/media/bootanimation.zip \
+    vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
+    vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
+    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
     vendor/nlj/prebuilt/common/bin/ApkManager.sh:system/bin/ApkManager.sh \
     vendor/nlj/prebuilt/common/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
     vendor/nlj/prebuilt/common/etc/init.d/06bindcache:system/etc/init.d/06bindcache \
