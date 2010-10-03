@@ -14,13 +14,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 # Used by BusyBox
-KERNEL_MODULES_DIR:=/system/lib/modules
+KERNEL_MODULES_DIR := /system/lib/modules
 
 # Tiny toolbox
-TINY_TOOLBOX:=true
+TINY_TOOLBOX := true
 
 # Enable Windows Media if supported by the board
-WITH_WINDOWS_MEDIA:=true
+WITH_WINDOWS_MEDIA := true
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
