@@ -22,20 +22,15 @@ PRODUCT_SPECIFIC_DEFINES += TARGET_PRELINKER_MAP=$(TOP)/vendor/nlj/prelink-linux
 # Build kernel
 PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
 PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-msm
-PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=nlj_msm_defconfig
+PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=$(TOP)/vendor/nlj/nlj_msm_defconfig
 
 # Extra DS overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
 
-# Disable Compcache by default on D/S
+# Disable compcache, enable swap, setup modversion
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.compcache.default=0
-
-# Enable Swap by default on D/S
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.swap.default=1
-
-PRODUCT_PROPERTY_OVERRIDES += \
+    ro.compcache.default=0 \
+    ro.swap.default=1 \
     ro.modversion=NLJ-$(shell date +%Y.%m.%d)
 
 # Use the audio profile hack
