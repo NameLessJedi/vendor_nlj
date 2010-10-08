@@ -5,36 +5,55 @@
 # credits for this should go to Firerat and
 # flames should go to me =o)
 # NLJ
-# 20100822 - NLJ
-# - first version heavily based on Firerat work
-# 20100829 - NLJ
-# - auto-disable swap when CompCache is active
-# - added check for FroYo (would gladly check for CM6 but there is no prop
-#   for that
+#
+# Changelog is in git:
+# http://www.plukwa.net/cgi-bin/gitweb.cgi?p=vendor_nlj.git;a=summary
+#
 
-if [ -e /data/property/persist.sys.swap ]
-then
-    SWAPPROP=`getprop  persist.sys.swap`
-else
-    SWAPPROP=`getprop ro.swap.default`
-    setprop persist.sys.swap $SWAPPROP
-fi # Idea taken from bin/handle_compcache
+PERSIST_CC=persist.service.compcache
+RO_CC=ro.compcache.default
+PERSIST_SWAP=persist.sys.swap
+RO_SWAP=ro.swap.default
+SWAPPINESS=20
 
-if [ -e /data/property/persist.service.compcache ]
+if [ -e /data/property/$PERSIST_CC ]
 then
-    CCPROP=`getprop persist.service.compcache`
+    CCPROP=`getprop $PERSIST_CC`
 else
-    CCPROP=`getprop ro.compcache.default`
-    setprop persist.service.compcache $CCPROP
+    CCPROP=`getprop $RO_CC`
+    setprop $PERSIST_CC $CCPROP
 fi # bin/handle_compcache 
 #FIXME: one day i should try and see if above is needed at all
     
-
 if [ $CCPROP -gt 0 ]
 then
-    log -p i -t swap "CompCache is enabled. Swap will NOT be activated."
+    log -p i -t swap "CompCache is enabled. NOT enabling Swap."
     exit 0
 fi
+
+# Swap is type 82
+SWAP=`fdisk -l /dev/block/mmcblk0 | awk '/^\// && $5 == 82 {print $1;exit;}'`
+
+if [ -z $SWAP ]
+then
+    log -p i -t swap "Swap partition not found"
+    setprop $PERSIST_SWAP -1
+    exit 0
+fi
+
+if [ -e /data/property/$PERSIST_SWAP ]
+then
+    SWAPPROP=`getprop  $PERSIST_SWAP`
+    if [ $SWAPPROP -eq -1 ]
+    then
+        SWAPPROP=`getprop $RO_SWAP`
+        setprop $PERSIST_SWAP $SWAPPROP
+    fi
+else
+    SWAPPROP=`getprop $RO_SWAP`
+    setprop $PERSIST_SWAP $SWAPPROP
+fi # Idea taken from bin/handle_compcache
+
 
 if [ $SWAPPROP -eq 0 ]
 then
@@ -42,20 +61,11 @@ then
     exit 0
 fi
 
-SWAPPINESS=20
-
-# Find swap partition
-SWAP=`fdisk -l /dev/block/mmcblk0 | awk '/^\// && $5 == 82 {print $1;exit;}'`
-
-
-if [ -n $SWAP ]
+swapon $SWAP 2>/dev/null
+if [ $? -eq 0 ]
 then
-    swapon $SWAP 2>/dev/null
-    if [ $? -eq 0 ]
-    then
-        echo $SWAPPINESS > /proc/sys/vm/swappiness
-        log -p i -t swap "Swap activated on ${SWAP} with ${SWAPPINESS} swappiness"
-    else
-        log -p e -t swap "swapon ${SWAP} failed"
-    fi
+    echo $SWAPPINESS > /proc/sys/vm/swappiness
+    log -p i -t swap "Swap enabled on ${SWAP} with ${SWAPPINESS} swappiness"
+else
+    log -p e -t swap "swapon ${SWAP} failed"
 fi
