@@ -39,6 +39,7 @@ app/GoogleFeedback.apk
 app/GooglePartnerSetup.apk
 app/GoogleQuickSearchBox.apk app/QuickSearchBox.apk
 app/GoogleServicesFramework.apk
+app/googlevoice.apk
 app/HtcCopyright.apk
 app/HtcEmailPolicy.apk
 app/HtcSettings.apk
