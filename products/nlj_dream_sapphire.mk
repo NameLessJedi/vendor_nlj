@@ -29,7 +29,7 @@ ifdef PERSHOOT_KERNEL
 else
     PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
     PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-msm
-    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=$(TOP)/vendor/nlj/nlj_msm_defconfig
+    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=cyanogen_msm_defconfig
 endif
 
 # Extra DS overlay
@@ -38,7 +38,7 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
 # Disable compcache, enable swap, setup modversion
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.compcache.default=0 \
-    ro.swap.default=1 \
+    ro.swap.default=0 \
     ro.modversion=NLJ-$(shell date +%Y.%m.%d)
 
 # Use the audio profile hack
@@ -59,8 +59,3 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/common/etc/init.d/10apps2sd:system/etc/init.d/10apps2sd
 
 PRODUCT_LOCALES := en_US pl_PL
-
-PRODUCT_PACKAGES += Gallery
-
-PACKAGES.Gallery.OVERRIDES := Gallery3D
-
