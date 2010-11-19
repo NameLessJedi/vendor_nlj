@@ -1,6 +1,18 @@
 #!/system/bin/sh
 # Mount bind /data/data to SD 
 
+if [ -z ${SD_EXT_DIRECTORY} ]
+then
+    SD_EXT_DIRECTORY=/sd-ext
+fi
+
+grep -q ${SD_EXT_DIRECTORY} /proc/mounts
+if [ ! $? -eq 0 ]
+then
+    log -p e -t apps2sd "${SD_EXT_DIRECTORY} not mounted. No attempt to mount bind."
+    exit 0
+fi
+
 if [ ! -d ${SD_EXT_DIRECTORY}/data ]
 then
     install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/data
