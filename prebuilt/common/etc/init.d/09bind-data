@@ -1,3 +1,4 @@
+#!/system/bin/sh
 # Mount bind /data/data to SD 
 
 if [ ! -d ${SD_EXT_DIRECTORY}/data ]

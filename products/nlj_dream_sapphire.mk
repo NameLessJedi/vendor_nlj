@@ -55,7 +55,7 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/common/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
     vendor/nlj/prebuilt/common/etc/init.d/06bindcache:system/etc/init.d/06bindcache \
     vendor/nlj/prebuilt/common/etc/init.d/08swap:system/etc/init.d/08swap \
-	venor/nlj/prebuilt/common/etc/init.d/09bind-data:system/etc/init.d/09bind-data \
+    vendor/nlj/prebuilt/common/etc/init.d/09bind-data:system/etc/init.d/09bind-data \
     vendor/nlj/prebuilt/common/etc/init.d/10apps2sd:system/etc/init.d/10apps2sd
 
 PRODUCT_LOCALES := en_US pl_PL
