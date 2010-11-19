@@ -1,0 +1,15 @@
+# Mount bind /data/data to SD 
+
+if [ ! -d ${SD_EXT_DIRECTORY}/data ]
+then
+    install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/data
+fi
+
+busybox mount --bind ${SD_EXT_DIRECTORY}/data /data/data
+if [ $? -eq 0 ]
+then
+    log -p i -t apps2sd "${SD_EXT_DIRECTORY}/data bound to /data/data"
+else
+    log -p e -t apps2sd "Failed to bind ${SD_EXT_DIRECTORY}/data on /data/data"
+    exit 1
+fi

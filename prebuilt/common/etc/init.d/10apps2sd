@@ -1,15 +1,4 @@
 #!/system/bin/sh
-#
-# NOTICE:
-# Although I've written this file from scratch (well almost =o)
-# credits for this should go to Firerat and
-# flames should go to me =o)
-# NLJ
-# 20100822 
-# - first version heavily based on Firerat work
-# 20100823
-# - /data/data mount bind to /sd-ext/data
-# - apk moved back to /data/app* in case we can't mount --bind  
 
 if [ -z ${SD_EXT_DIRECTORY} ]
 then
@@ -23,78 +12,36 @@ then
     exit 0
 fi
 
-for d in app app-private
-do
-   if [ ! -d ${SD_EXT_DIRECTORY}/${d} ]
-   then
-       install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/${d}
-       log -p i -t apps2sd "Created ${SD_EXT_DIRECTORY}/${d}"
-   fi
-   # Firerat's 1.3.8 had /data/app symlinked to /sd-ext/app
-   # just remove it and recreate dir
-   if [ -L /data/${d} ]
-   then
-       rm /data/${d}
-       if [ ! $? -eq 0 ]
-       then
-           log -p e -t apps2sd "Can't remove /data/${d} symlink. Not enabling Apps2SD."
-           exit 1
-       fi
-       install -m 771 -o 1000 -g 1000 -d /data/${d}
-       if [ ! $? -eq 0 ]
-       then
-           log -p e -t apps2sd "Can't re-create /data/${d} dir. Not enabling Apps2SD."
-           exit 1
-       fi
-   elif [ -d /data/${d} ]
-   then
-       # Move files to SD 
-       find /data/${d}/ -type f >/dev/${d}_flist 
-       for f in `cat /dev/${d}_flist`
-       do
-          mv ${f} ${SD_EXT_DIRECTORY}/${d}/
-       done
-       log -p e -t apps2sd "Moved apps to ${SD_EXT_DIRECTORY}/${d}"
-   fi
-   # Support Firerat's ApkManager.sh
-   if [ ! -e /data/${d}_i ]
-   then
-       install -m 771 -o 1000 -g 1000 -d /data/${d}_i
-   fi
-   # All should be setup at this point
-   busybox mount --bind ${SD_EXT_DIRECTORY}/${d} /data/${d}
-   if [ $? -eq 0 ]
-   then
-       log -p i -t apps2sd "${SD_EXT_DIRECTORY}/${d} bound to /data/${d}"
-   else
-       log -p e -t apps2sd "Failed to bind ${SD_EXT_DIRECTORY}/${d} on /data/${d}"
-       sed -i 's#/data/#${SD_EXT_DIRECTORY}#' /dev/${d}_flist
-       for f in `cat /dev/${d}_flist`
-       do
-          mv ${f} /data/${d}
-       done
-       log -p e -t apps2sd "Moved apps back to /data/${d}"
-       # in some bizzarre scenario this can lead to /data/app being on SD
-       # and /data/app-private on phone mem (or vice-versa) 
-   fi
-   rm /dev/${d}_flist
-done
+if [ ! -d ${SD_EXT_DIRECTORY}/dalvik-cache ]
+then
+    install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/dalvik-cache
+    log -p i -t apps2sdext "Created ${SD_EXT_DIRECTORY}/dalvik-cache"
+fi
+
+if [ -d /data/app_i ]
+then
+    for dir in app app-private
+    do
+        if [ ! -d ${SD_EXT_DIRECTORY}/${dir} ]
+        then
+            install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/${dir}
+            log -p i -t apps2sdext "Created ${SD_EXT_DIRECTORY}/${dir}"
+        fi
+        mv /data/${dir}_i/* /data/${dir}/ 2> /dev/null
+        rmdir ${dir}_i 2>/dev/null
+    done
+    find ${SD_EXT_DIRECTORY}/app ${SD_EXT_DIRECTORY}/app-private \
+        -type l -exec rm {} \;
+    if [ -e "/data/system/packages.xml" ]
+    then
+        for apk in `ls /sd-ext/app/*apk /sd-ext/app-private/*apk`
+        do
+            # update packages.xml with apk's location
+            sed s~/data/`basename $apk`~/sd-ext/`basename $apk`~ -i /data/system/packages.xml
+            # clear dalvik-cache ( will probably get generated on /sd-ext )
+            rm /data/dalvik-cache/*`basename $apk`*.dex 2> /dev/null
+        done
+    fi
+fi
 
 setprop cm.a2sd.active 1
-log -p i -t apps2sd "Apps2SD activated"
-
-# Mount bind /data/data to SD 
-
-if [ ! -d ${SD_EXT_DIRECTORY}/data ]
-then
-    install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/data
-fi
-
-busybox mount --bind ${SD_EXT_DIRECTORY}/data /data/data
-if [ $? -eq 0 ]
-then
-    log -p i -t apps2sd "${SD_EXT_DIRECTORY}/data bound to /data/data"
-else
-    log -p e -t apps2sd "Failed to bind ${SD_EXT_DIRECTORY}/data on /data/data"
-    exit 1
-fi

@@ -52,10 +52,10 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
     vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
-    vendor/nlj/prebuilt/common/bin/ApkManager.sh:system/bin/ApkManager.sh \
     vendor/nlj/prebuilt/common/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
     vendor/nlj/prebuilt/common/etc/init.d/06bindcache:system/etc/init.d/06bindcache \
     vendor/nlj/prebuilt/common/etc/init.d/08swap:system/etc/init.d/08swap \
+	venor/nlj/prebuilt/common/etc/init.d/09bind-data:system/etc/init.d/09bind-data \
     vendor/nlj/prebuilt/common/etc/init.d/10apps2sd:system/etc/init.d/10apps2sd
 
 PRODUCT_LOCALES := en_US pl_PL
