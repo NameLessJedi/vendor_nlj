@@ -12,21 +12,20 @@ then
     exit 0
 fi
 
-if [ ! -d ${SD_EXT_DIRECTORY}/dalvik-cache ]
-then
-    install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/dalvik-cache
-    log -p i -t apps2sdext "Created ${SD_EXT_DIRECTORY}/dalvik-cache"
-fi
+for dir in dalvik-cache app app-private
+do
+    if [ ! -d ${SD_EXT_DIRECTORY}/${dir} ]
+    then
+	install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/${dir}
+	log -p i -t apps2sdext "${SD_EXT_DIRECTORY}/${dir} (re)created."
+    fi
+done
+
 
 if [ -d /data/app_i ]
 then
     for dir in app app-private
     do
-        if [ ! -d ${SD_EXT_DIRECTORY}/${dir} ]
-        then
-            install -m 771 -o 1000 -g 1000 -d ${SD_EXT_DIRECTORY}/${dir}
-            log -p i -t apps2sdext "Created ${SD_EXT_DIRECTORY}/${dir}"
-        fi
         mv /data/${dir}_i/* /data/${dir}/ 2> /dev/null
         rmdir ${dir}_i 2>/dev/null
     done

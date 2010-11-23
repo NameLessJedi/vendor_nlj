@@ -130,7 +130,7 @@ check_installscript;
 case "$1" in
    backup)
       mount $S
-      check_prereq;
+      # check_prereq;
       if [ $PROCEED -ne 0 ];
       then
          rm -rf $C
@@ -144,7 +144,7 @@ case "$1" in
       umount $S
    ;;
    restore)
-      check_prereq;
+      # check_prereq;
       if [ $PROCEED -ne 0 ];
       then
          for file_list in get_files get_custom_files; do
