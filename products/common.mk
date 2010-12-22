@@ -3,8 +3,6 @@ PRODUCT_NAME := nlj
 PRODUCT_BRAND := cyanogen
 PRODUCT_DEVICE := generic
 
-PRODUCT_PACKAGES += ADWLauncher
-
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.ringtone=DonMessWivIt.ogg
 
@@ -33,11 +31,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # CyanogenMod specific product packages
 PRODUCT_PACKAGES += \
+    AndroidTerm \
     CMParts \
     CMPartsHelper \
     CMWallpapers \
     DSPManager \
-    FileManager \
     Superuser
 
 # Copy over the changelog to the device
