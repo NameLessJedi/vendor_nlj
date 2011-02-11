@@ -39,10 +39,12 @@ PRODUCT_SPECIFIC_DEFINES += TARGET_NO_PREREQ=true
 # Extra DS overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
 
-# Disable compcache, enable swap, setup modversion
+# Disable compcache, enable swap, enable data on sd-ext
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.compcache.default=0 \
     ro.swap.default=0 \
+    ro.vold.sdextonboot=1 \
+    ro.vold.data2sdext=1 \
     ro.modversion=NLJ-$(shell date +%Y.%m.%d)
 
 # Use the audio profile hack
@@ -55,11 +57,6 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/mdpi/media/bootanimation.zip:system/media/bootanimation.zip \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
-    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
-    vendor/nlj/prebuilt/common/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
-    vendor/nlj/prebuilt/common/etc/init.d/06bindcache:system/etc/init.d/06bindcache \
-    vendor/nlj/prebuilt/common/etc/init.d/08swap:system/etc/init.d/08swap \
-    vendor/nlj/prebuilt/common/etc/init.d/09bind-data:system/etc/init.d/09bind-data \
-    vendor/nlj/prebuilt/common/etc/init.d/10apps2sd:system/etc/init.d/10apps2sd
+    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile
 
-PRODUCT_LOCALES := en_US pl_PL
+PRODUCT_LOCALES := pl_PL en_US
