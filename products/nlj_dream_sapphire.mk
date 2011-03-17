@@ -22,13 +22,19 @@ PRODUCT_BUILD_PROP_OVERRIDES += BUILD_ID=FRG83 BUILD_DISPLAY_ID=FRG83 BUILD_FING
 # PRODUCT_SPECIFIC_DEFINES += TARGET_PRELINKER_MAP=$(TOP)/vendor/nlj/prelink-linux-arm-ds.map
 
 # Build kernel
-PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
-PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-ezterry
-PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=$(TOP)/kernel-ezterry/config-2708-xtra
+#ifdef PERSHOOT_KERNEL
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-ezterry
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=$(TOP)/kernel-ezterry/config-32b-xtra
+#else
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-msm
+#    PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=cyanogen_msm_defconfig
+#endif
 
 PRODUCT_SPECIFIC_DEFINES += TARGET_NO_RECOVERY=true 
-#PRODUCT_SPECIFIC_DEFINES += TARGET_NO_KERNEL=true
-#PRODUCT_SPECIFIC_DEFINES += TARGET_NO_PREREQ=true
+PRODUCT_SPECIFIC_DEFINES += TARGET_NO_KERNEL=true
+PRODUCT_SPECIFIC_DEFINES += TARGET_NO_PREREQ=true
 
 # Extra DS overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
@@ -51,7 +57,6 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/mdpi/media/bootanimation.zip:system/media/bootanimation.zip \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
-    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
-	vendor/nlj/prebuilt/common/etc/vold.fstab:system/etc/vold.fstab
+    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile
 
 PRODUCT_LOCALES := pl_PL en_US
