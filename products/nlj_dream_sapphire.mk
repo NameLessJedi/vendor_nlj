@@ -57,6 +57,7 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/mdpi/media/bootanimation.zip:system/media/bootanimation.zip \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_dream.csv:system/etc/AudioPara_dream.csv \
     vendor/nlj/prebuilt/dream_sapphire/etc/AudioPara_sapphire.csv:system/etc/AudioPara_sapphire.csv \
-    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile
+    vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
+	vendor/nlj/prebuilt/common/etc/vold.fstab:system/etc/vold.fstab
 
 PRODUCT_LOCALES := pl_PL en_US
