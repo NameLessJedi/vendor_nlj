@@ -32,14 +32,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # CyanogenMod specific product packages
 PRODUCT_PACKAGES += \
     AndroidTerm \
+    CACert \
     CMParts \
     CMWallpapers \
     DSPManager \
     Superuser
 
 # Copy over the changelog to the device
-# PRODUCT_COPY_FILES += \
-#    vendor/cyanogen/CHANGELOG.mkdn:system/etc/CHANGELOG-CM.txt
+PRODUCT_COPY_FILES += \
+   ChangeLog.NLJ:system/etc/CHANGELOG-NLJ.txt
 
 # Common CM overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/common
