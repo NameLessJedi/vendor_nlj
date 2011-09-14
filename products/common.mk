@@ -33,7 +33,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     AndroidTerm \
     CMParts \
-    CMPartsHelper \
     CMWallpapers \
     DSPManager \
     Superuser
@@ -66,7 +65,6 @@ PRODUCT_COPY_FILES += \
     vendor/nlj/prebuilt/common/bin/fix_permissions:system/bin/fix_permissions \
     vendor/nlj/prebuilt/common/bin/sysinit:system/bin/sysinit \
     vendor/nlj/prebuilt/common/xbin/htop:system/xbin/htop \
-    vendor/nlj/prebuilt/common/xbin/irssi:system/xbin/irssi \
     vendor/nlj/prebuilt/common/xbin/lsof:system/xbin/lsof \
     vendor/nlj/prebuilt/common/xbin/powertop:system/xbin/powertop \
     vendor/nlj/prebuilt/common/xbin/openvpn-up.sh:system/xbin/openvpn-up.sh
