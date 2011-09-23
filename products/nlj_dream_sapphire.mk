@@ -17,21 +17,6 @@ PRODUCT_MODEL := Dream/Sapphire
 PRODUCT_MANUFACTURER := HTC
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_ID=FRG83 BUILD_DISPLAY_ID=FRG83 BUILD_FINGERPRINT=tmobile/opal/sapphire/sapphire:2.2.1/FRG83/60505:user/release-keys PRIVATE_BUILD_DESC="opal-user 2.2.1 FRG83 60505 release-keys"
 
-# http://github.com/CyanogenMod/android_vendor_cyanogen/commit/b05629c1413dbaee5519bf5729ccdc7cd75bf464
-# "Prelink map is no longer required with new proprietaries for DS."
-# PRODUCT_SPECIFIC_DEFINES += TARGET_PRELINKER_MAP=$(TOP)/vendor/nlj/prelink-linux-arm-ds.map
-
-# Build kernel
-
-PRODUCT_SPECIFIC_DEFINES += TARGET_PREBUILT_KERNEL=
-PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_DIR=kernel-ezterry
-PRODUCT_SPECIFIC_DEFINES += TARGET_KERNEL_CONFIG=$(TOP)/kernel-ezterry/config-2708-xtra
-PRODUCT_SPECIFIC_DEFINES += BOARD_KERNEL_BASE=02000000
-
-#PRODUCT_SPECIFIC_DEFINES += TARGET_NO_RECOVERY=true
-#PRODUCT_SPECIFIC_DEFINES += TARGET_NO_KERNEL=true
-#PRODUCT_SPECIFIC_DEFINES += TARGET_NO_PREREQ=true
-
 # Extra DS overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/nlj/overlay/dream_sapphire
 
@@ -41,7 +26,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.swap.default=0 \
     ro.vold.sdextonboot=1 \
     ro.vold.data2sdext=1 \
-    ro.modversion=NLJ-$(shell date +%Y.%m.%d)
+    ro.modversion=NameLessFroyo-$(shell date +%Y%m%d)
 
 # Use the audio profile hack
 WITH_DS_HTCACOUSTIC_HACK := true
@@ -55,4 +40,6 @@ PRODUCT_COPY_FILES +=  \
     vendor/nlj/prebuilt/dream_sapphire/etc/init.d/02audio_profile:system/etc/init.d/02audio_profile \
 	vendor/nlj/prebuilt/common/etc/vold.fstab:system/etc/vold.fstab
 
-PRODUCT_LOCALES := pl_PL en_US
+ifdef PL_GPS_CONF
+	PRODUCT_COPY_FILES += vendor/nlj/prebuilt/common/etc/gps.conf_pl:system/etc/gps.conf
+endif

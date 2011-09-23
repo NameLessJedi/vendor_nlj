@@ -61,6 +61,7 @@ PRODUCT_COPY_FILES += \
     vendor/nlj/prebuilt/common/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
     vendor/nlj/prebuilt/common/etc/init.d/03firstboot:system/etc/init.d/03firstboot \
     vendor/nlj/prebuilt/common/etc/init.d/04modules:system/etc/init.d/04modules \
+    vendor/nlj/prebuilt/common/etc/security/cacerts.bks:system/etc/security/cacerts.bks \
     vendor/nlj/prebuilt/common/bin/handle_compcache:system/bin/handle_compcache \
     vendor/nlj/prebuilt/common/bin/compcache:system/bin/compcache \
     vendor/nlj/prebuilt/common/bin/fix_permissions:system/bin/fix_permissions \
